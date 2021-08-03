@@ -4,6 +4,10 @@
     if(isset($_POST['submit'])){
         $validation = new UserValidator($_POST);
         $errors = $validation->validateForm();
+        if(count($errors) == 0){
+            $successMsg = "All entries were VALID!";
+            $_POST = array();
+        }
     }
 ?>
 <!DOCTYPE html>
@@ -19,6 +23,9 @@
     <div class="new-user">
         <h2>Create New User</h2>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+            <div style="color: green; text-align: center;">
+                <?php echo $successMsg ?? ''; ?>
+            </div>
             <label>Username:</label>
             <input type="text" name="username" value="<?php echo htmlspecialchars($_POST['username'] ?? ""); ?>">
             <div class="error">
